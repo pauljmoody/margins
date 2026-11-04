@@ -1,8 +1,9 @@
 "use strict";
 
 (() => {
+  const MM_PER_INCH = 25.4;
+
   const els = {
-    themeMode: document.getElementById("themeMode"),
     fileInput: document.getElementById("fileInput"),
     orientation: document.getElementById("orientation"),
     dpi: document.getElementById("dpi"),
@@ -44,15 +45,6 @@
     return Math.min(max, Math.max(min, value));
   }
 
-  function applyTheme(theme) {
-    const nextTheme = ["auto", "light", "dark"].includes(theme) ? theme : "auto";
-    document.documentElement.setAttribute("data-theme", nextTheme);
-    localStorage.setItem("themeMode", nextTheme);
-    if (els.themeMode) {
-      els.themeMode.value = nextTheme;
-    }
-  }
-
   function currentPrintSizeIn() {
     return els.orientation.value === "6x4"
       ? { wIn: 6, hIn: 4 }
@@ -61,10 +53,10 @@
 
   function getMarginsIn() {
     const values = {
-      top: Number(els.marginTop.value) || 0,
-      right: Number(els.marginRight.value) || 0,
-      bottom: Number(els.marginBottom.value) || 0,
-      left: Number(els.marginLeft.value) || 0,
+      top: (Number(els.marginTop.value) || 0) / MM_PER_INCH,
+      right: (Number(els.marginRight.value) || 0) / MM_PER_INCH,
+      bottom: (Number(els.marginBottom.value) || 0) / MM_PER_INCH,
+      left: (Number(els.marginLeft.value) || 0) / MM_PER_INCH,
     };
 
     const { wIn, hIn } = currentPrintSizeIn();
@@ -365,12 +357,6 @@
   }
 
   function wireEvents() {
-    if (els.themeMode) {
-      els.themeMode.addEventListener("change", () => {
-        applyTheme(els.themeMode.value);
-      });
-    }
-
     els.fileInput.addEventListener("change", (event) => {
       const file = event.target.files && event.target.files[0];
       void loadImageFromFile(file);
@@ -421,8 +407,6 @@
     els.previewCanvas.addEventListener("pointercancel", onDragEnd);
   }
 
-  const savedTheme = localStorage.getItem("themeMode") || "auto";
-  applyTheme(savedTheme);
   wireEvents();
   redraw();
 })();

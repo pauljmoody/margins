@@ -9,19 +9,8 @@
   --shadow: 0 6px 20px rgba(20, 30, 55, 0.06);
 }
 
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #0f1115;
-  --card: #171a21;
-  --text: #f5f7fb;
-  --muted: #b7bfce;
-  --accent: #6ea8fe;
-  --line: #2b3140;
-  --shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-}
-
 @media (prefers-color-scheme: dark) {
-  :root[data-theme="auto"] {
+  :root {
     color-scheme: dark;
     --bg: #0f1115;
     --card: #171a21;
@@ -55,16 +44,6 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
-}
-
-.themeControl {
-  display: grid;
-  gap: 4px;
-  justify-items: start;
-}
-
-.themeControl select {
-  min-width: 140px;
 }
 
 h1 {
