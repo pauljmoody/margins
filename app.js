@@ -2,6 +2,7 @@
 
 (() => {
   const els = {
+    themeMode: document.getElementById("themeMode"),
     fileInput: document.getElementById("fileInput"),
     orientation: document.getElementById("orientation"),
     dpi: document.getElementById("dpi"),
@@ -41,6 +42,15 @@
 
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
+  }
+
+  function applyTheme(theme) {
+    const nextTheme = ["auto", "light", "dark"].includes(theme) ? theme : "auto";
+    document.documentElement.setAttribute("data-theme", nextTheme);
+    localStorage.setItem("themeMode", nextTheme);
+    if (els.themeMode) {
+      els.themeMode.value = nextTheme;
+    }
   }
 
   function currentPrintSizeIn() {
@@ -355,6 +365,12 @@
   }
 
   function wireEvents() {
+    if (els.themeMode) {
+      els.themeMode.addEventListener("change", () => {
+        applyTheme(els.themeMode.value);
+      });
+    }
+
     els.fileInput.addEventListener("change", (event) => {
       const file = event.target.files && event.target.files[0];
       void loadImageFromFile(file);
@@ -405,6 +421,8 @@
     els.previewCanvas.addEventListener("pointercancel", onDragEnd);
   }
 
+  const savedTheme = localStorage.getItem("themeMode") || "auto";
+  applyTheme(savedTheme);
   wireEvents();
   redraw();
 })();

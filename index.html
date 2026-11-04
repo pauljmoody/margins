@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,8 +8,20 @@
 </head>
 <body>
   <main class="app" aria-label="4x6 Photo Crop and Margin Tool">
-    <h1>4x6 Photo Crop + Margin Exporter</h1>
-    <p class="subtitle">Local-only editor (no upload). Set crop and margins, then export high resolution for printing.</p>
+    <header class="topbar">
+      <div>
+        <h1>4x6 Photo Crop + Margin Exporter</h1>
+        <p class="subtitle">Local-only editor (no upload). Set crop and margins, then export high resolution for printing.</p>
+      </div>
+      <div class="themeControl">
+        <label for="themeMode">Theme</label>
+        <select id="themeMode" aria-label="Theme mode">
+          <option value="auto">Auto</option>
+          <option value="light">Day</option>
+          <option value="dark">Night</option>
+        </select>
+      </div>
+    </header>
 
     <section class="panel controls" aria-label="Controls">
       <div class="row">
